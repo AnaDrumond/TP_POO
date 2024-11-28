@@ -1,89 +1,130 @@
-from tkinter import *
-from tkinter import ttk
+import tkinter as tk
+from tkinter import ttk, messagebox
 from controller import BibliotecaController
 
-# Inicializar o controlador
+
 biblioteca = BibliotecaController()
 
-# Criar a janela principal
-janela = Tk()
-janela.title("Biblioteca")
-janela.geometry("800x600")
-janela.configure(bg="#f0f0f0")
 
-# Funções da interface
-def adicionar_livro():
-    titulo = entry_titulo.get()
-    autor = entry_autor.get()
-    editora = entry_editora.get()
-    ano = entry_ano.get()
-    isbn = entry_isbn.get()
-    
-    if titulo and autor and editora and ano and isbn:
-        biblioteca.insert_book(titulo, autor, editora, int(ano), isbn)
-        atualizar_lista_livros()
-        limpar_campos()
-    else:
-        print("Preencha todos os campos!")
+def atualizar_lista_usuarios():
+    tree_usuarios.delete(*tree_usuarios.get_children())
+    usuarios = biblioteca.list_users()
+    for usuario in usuarios:
+        tree_usuarios.insert("", "end", values=(usuario["id"], usuario["nome"], usuario["sobrenome"], usuario["endereco"], usuario["email"], usuario["telefone"]))
 
-def atualizar_lista_livros():
-    livros = biblioteca.list_books()
-    tree_livros.delete(*tree_livros.get_children())
-    for livro in livros:
-        tree_livros.insert("", "end", values=livro)
 
-def limpar_campos():
-    entry_titulo.delete(0, END)
-    entry_autor.delete(0, END)
-    entry_editora.delete(0, END)
-    entry_ano.delete(0, END)
-    entry_isbn.delete(0, END)
+def novo_usuario():
+    def salvar_usuario():
+        nome = entry_nome.get()
+        sobrenome = entry_sobrenome.get()
+        endereco = entry_endereco.get()
+        email = entry_email.get()
+        telefone = entry_telefone.get()
 
-# Criar Frames
-frame_top = Frame(janela, bg="#6e8faf", height=50)
-frame_top.pack(fill=X)
+        if nome and sobrenome and email:
+            biblioteca.add_user(nome, sobrenome, endereco, email, telefone)
+            atualizar_lista_usuarios()
+            janela.destroy()
+        else:
+            messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
 
-frame_form = Frame(janela, bg="#f0f0f0", padx=10, pady=10)
-frame_form.pack(fill=X)
+    janela = tk.Toplevel(root)
+    janela.title("Novo Usuário")
 
-frame_table = Frame(janela, bg="#f0f0f0")
-frame_table.pack(fill=BOTH, expand=True, padx=10, pady=10)
+    tk.Label(janela, text="Nome:").grid(row=0, column=0, padx=10, pady=5)
+    entry_nome = tk.Entry(janela)
+    entry_nome.grid(row=0, column=1, padx=10, pady=5)
 
-# Widgets do Formulário
-Label(frame_form, text="Título:", bg="#f0f0f0").grid(row=0, column=0, sticky=W, pady=5)
-entry_titulo = Entry(frame_form, width=30)
-entry_titulo.grid(row=0, column=1, pady=5)
+    tk.Label(janela, text="Sobrenome:").grid(row=1, column=0, padx=10, pady=5)
+    entry_sobrenome = tk.Entry(janela)
+    entry_sobrenome.grid(row=1, column=1, padx=10, pady=5)
 
-Label(frame_form, text="Autor:", bg="#f0f0f0").grid(row=1, column=0, sticky=W, pady=5)
-entry_autor = Entry(frame_form, width=30)
-entry_autor.grid(row=1, column=1, pady=5)
+    tk.Label(janela, text="Endereço:").grid(row=2, column=0, padx=10, pady=5)
+    entry_endereco = tk.Entry(janela)
+    entry_endereco.grid(row=2, column=1, padx=10, pady=5)
 
-Label(frame_form, text="Editora:", bg="#f0f0f0").grid(row=2, column=0, sticky=W, pady=5)
-entry_editora = Entry(frame_form, width=30)
-entry_editora.grid(row=2, column=1, pady=5)
+    tk.Label(janela, text="E-mail:").grid(row=3, column=0, padx=10, pady=5)
+    entry_email = tk.Entry(janela)
+    entry_email.grid(row=3, column=1, padx=10, pady=5)
 
-Label(frame_form, text="Ano de Publicação:", bg="#f0f0f0").grid(row=3, column=0, sticky=W, pady=5)
-entry_ano = Entry(frame_form, width=30)
-entry_ano.grid(row=3, column=1, pady=5)
+    tk.Label(janela, text="Telefone:").grid(row=4, column=0, padx=10, pady=5)
+    entry_telefone = tk.Entry(janela)
+    entry_telefone.grid(row=4, column=1, padx=10, pady=5)
 
-Label(frame_form, text="ISBN:", bg="#f0f0f0").grid(row=4, column=0, sticky=W, pady=5)
-entry_isbn = Entry(frame_form, width=30)
-entry_isbn.grid(row=4, column=1, pady=5)
+    tk.Button(janela, text="Salvar", command=salvar_usuario).grid(row=5, columnspan=2, pady=10)
 
-Button(frame_form, text="Adicionar Livro", command=adicionar_livro, bg="#6e8faf", fg="white").grid(row=5, columnspan=2, pady=10)
 
-# Tabela de Livros
-tree_livros = ttk.Treeview(frame_table, columns=("ID", "Título", "Autor", "Editora", "Ano", "ISBN"), show="headings")
-tree_livros.heading("ID", text="ID")
-tree_livros.heading("Título", text="Título")
-tree_livros.heading("Autor", text="Autor")
-tree_livros.heading("Editora", text="Editora")
-tree_livros.heading("Ano", text="Ano")
-tree_livros.heading("ISBN", text="ISBN")
-tree_livros.pack(fill=BOTH, expand=True)
+def novo_livro():
+    def salvar_livro():
+        titulo = entry_titulo.get()
+        autor = entry_autor.get()
+        genero = entry_genero.get()
+        ano = entry_ano.get()
 
-# Atualizar tabela inicial
-atualizar_lista_livros()
+        if titulo and autor and genero:
+            biblioteca.add_book(titulo, autor, genero, ano)
+            messagebox.showinfo("Sucesso", "Livro cadastrado com sucesso!")
+            janela.destroy()
+        else:
+            messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
 
-# Iniciar o loop da janela
-janela.mainloop()
+    janela = tk.Toplevel(root)
+    janela.title("Novo Livro")
+
+    tk.Label(janela, text="Título:").grid(row=0, column=0, padx=10, pady=5)
+    entry_titulo = tk.Entry(janela)
+    entry_titulo.grid(row=0, column=1, padx=10, pady=5)
+
+    tk.Label(janela, text="Autor:").grid(row=1, column=0, padx=10, pady=5)
+    entry_autor = tk.Entry(janela)
+    entry_autor.grid(row=1, column=1, padx=10, pady=5)
+
+    tk.Label(janela, text="Gênero:").grid(row=2, column=0, padx=10, pady=5)
+    entry_genero = tk.Entry(janela)
+    entry_genero.grid(row=2, column=1, padx=10, pady=5)
+
+    tk.Label(janela, text="Ano:").grid(row=3, column=0, padx=10, pady=5)
+    entry_ano = tk.Entry(janela)
+    entry_ano.grid(row=3, column=1, padx=10, pady=5)
+
+    tk.Button(janela, text="Salvar", command=salvar_livro).grid(row=4, columnspan=2, pady=10)
+
+
+root = tk.Tk()
+root.title("Sistema de Gerenciamento de Livros")
+root.geometry("800x600")
+
+
+frame_lateral = tk.Frame(root, bg="lightgray", width=200)
+frame_lateral.pack(side="left", fill="y")
+
+tk.Label(frame_lateral, text="Sistema de Gerenciamento de Livros", bg="lightgray", font=("Arial", 14, "bold"), wraplength=180).pack(pady=20)
+tk.Button(frame_lateral, text="Novo usuário", command=novo_usuario).pack(fill="x", pady=5)
+tk.Button(frame_lateral, text="Novo livro", command=novo_livro).pack(fill="x", pady=5)
+tk.Button(frame_lateral, text="Exibir todos os livros").pack(fill="x", pady=5)
+tk.Button(frame_lateral, text="Exibir todos os usuários", command=atualizar_lista_usuarios).pack(fill="x", pady=5)
+tk.Button(frame_lateral, text="Realizar um empréstimo").pack(fill="x", pady=5)
+tk.Button(frame_lateral, text="Devolução de um empréstimo").pack(fill="x", pady=5)
+tk.Button(frame_lateral, text="Livros emprestados no momento").pack(fill="x", pady=5)
+
+
+frame_principal = tk.Frame(root)
+frame_principal.pack(side="right", fill="both", expand=True)
+
+tk.Label(frame_principal, text="Todos os usuários do banco de dados", font=("Arial", 12, "bold")).pack(pady=10)
+
+
+colunas = ("ID", "Nome", "Sobrenome", "Endereço", "Email", "Telefone")
+tree_usuarios = ttk.Treeview(frame_principal, columns=colunas, show="headings")
+
+for coluna in colunas:
+    tree_usuarios.heading(coluna, text=coluna)
+    tree_usuarios.column(coluna, width=120, anchor="center")
+
+tree_usuarios.pack(fill="both", expand=True)
+
+
+atualizar_lista_usuarios()
+
+
+root.mainloop()
