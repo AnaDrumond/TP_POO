@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from sistema.sistema import Sistema
 from usuario.cliente import Cliente
+from cliente.tela_exibir_catalogo import TelaExibirCatalogo
 
 class TelaCliente:
     def __init__(self, sistema: Sistema):
@@ -21,7 +22,7 @@ class TelaCliente:
         tk.Button(self.root, text="Fale Conosco", command=self.fale_conosco, width=30).pack(pady=5)
 
     def ver_catalogo(self):
-        messagebox.showinfo("Catálogo", "Função em construção.")
+        TelaExibirCatalogo(self.sistema)
 
     def reservar_livro(self):
         messagebox.showinfo("Reservar Livro", "Função em construção.")

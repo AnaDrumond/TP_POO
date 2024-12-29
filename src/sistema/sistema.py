@@ -3,6 +3,7 @@ from tkinter import ttk
 import json
 import os
 import hashlib
+import datetime
 from usuario.cliente import Cliente
 from usuario.administrador import Administrador
 
@@ -77,18 +78,6 @@ class Sistema:
         self.salvar_livros()
 
     def editar_livro(self, titulo_atual: str, novo_titulo: str, novo_autor: str, novo_ano: int):
-        for livro in self.livros:
-            if livro['titulo'] == titulo_atual:
-                livro.update({"titulo": novo_titulo, "autor": novo_autor, "ano": novo_ano})
-                self.salvar_livros()
-                return
-        raise ValueError("Livro não encontrado.")
-
-    def remover_livro(self, titulo: str):
-        self.livros = [livro for livro in self.livros if livro['titulo'] != titulo]
-        self.salvar_livros()
-        
-    def editar_livro(self, titulo_atual: str, novo_titulo: str, novo_autor: str, novo_ano: int):
         if not novo_titulo or not novo_autor or novo_ano <= 0:
             raise ValueError("Informações inválidas para o livro.")
 
@@ -103,6 +92,6 @@ class Sistema:
         livro_removido = next((livro for livro in self.livros if livro['titulo'] == titulo), None)
         if not livro_removido:
             raise ValueError("Livro não encontrado.")
-        self.livros.remove(livro_removido)
+        self.livros = [livro for livro in self.livros if livro['titulo'] != titulo]
         self.salvar_livros()
-        
+        return livro_removido
