@@ -1,0 +1,43 @@
+[
+    {
+        "titulo": "O Senhor dos An\u00c3\u00a9is - A Sociedade do Anel",
+        "autor": "J.R.R. Tolkien",
+        "ano": 1954,
+        "disponivel": true
+    },
+    {
+        "titulo": "1984",
+        "autor": "George Orwell",
+        "ano": 1949,
+        "disponivel": false,
+        "reserva": {
+            "cliente": "self._nome",
+            "periodo": 5,
+            "valor": 10.0
+        }
+    },
+    {
+        "titulo": "O Pequeno Pr\u00c3\u00adncipe",
+        "autor": "Antoine de Saint-Exup\u00c3\u00a9ry",
+        "ano": 1943,
+        "disponivel": true
+    },
+    {
+        "titulo": "Dom Quixote",
+        "autor": "Miguel de Cervantes",
+        "ano": 1605,
+        "disponivel": false
+    },
+    {
+        "titulo": "Funda\u00c3\u00a7\u00c3\u00a3o",
+        "autor": "Isaac Asimov",
+        "ano": 1951,
+        "disponivel": true
+    },
+    {
+        "titulo": "O Nome da Rosa",
+        "autor": "Umberto Eco",
+        "ano": 1980,
+        "disponivel": false
+    }
+]
