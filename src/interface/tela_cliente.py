@@ -3,10 +3,12 @@ from tkinter import messagebox
 from sistema.sistema import Sistema
 from usuario.cliente import Cliente
 from cliente.tela_exibir_catalogo import TelaExibirCatalogo
+from cliente.tela_reservar_livro import TelaReservarLivro
 
 class TelaCliente:
-    def __init__(self, sistema: Sistema):
+    def __init__(self, sistema: Sistema, cliente: Cliente):
         self.sistema = sistema
+        self.cliente = cliente
 
         self.root = tk.Tk()
         self.root.title("Painel do Cliente")
@@ -25,7 +27,7 @@ class TelaCliente:
         TelaExibirCatalogo(self.sistema)
 
     def reservar_livro(self):
-        messagebox.showinfo("Reservar Livro", "Função em construção.")
+        TelaReservarLivro(self.sistema, self.cliente)
 
     def devolver_livro(self):
         messagebox.showinfo("Devolver Livro", "Função em construção.")

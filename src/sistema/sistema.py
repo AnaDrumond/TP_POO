@@ -95,3 +95,33 @@ class Sistema:
         self.livros = [livro for livro in self.livros if livro['titulo'] != titulo]
         self.salvar_livros()
         return livro_removido
+    
+    def reservar_livro(self, titulo_livro, cliente, periodo): #Função para a reserva de livro do cliente;
+        livro = next((l for l in self.livros if l["titulo"] == titulo_livro), None)
+        if not livro:
+            raise ValueError("Livro não encontrado.")
+        if not livro.get("disponivel", True):
+            raise ValueError("Livro indisponível para reserva.")
+
+        valores_periodo = {5: 10.0, 10: 20.00} #Definição do período de empréstimo e seu valor;  
+        valor = valores_periodo.get(periodo, None)
+        if valor is None:
+            raise ValueError("Período de empréstimo inválido.")
+    
+        livro["disponivel"] = False #Atualização do estado do livro;
+        livro["reserva"] = {
+            "cliente": cliente.nome,
+            "periodo": periodo,
+            "valor": valor
+        }
+        
+        try:
+            self.salvar_livros()
+        except Exception as e:
+            raise IOError(f"Erro ao salvar a reserva no arquivo: {str(e)}")
+        
+        return valor
+
+    def salvar_livros(self):
+        with open(self.arquivo_livros, "w") as arquivo:
+            json.dump(self.livros, arquivo, indent=4)
