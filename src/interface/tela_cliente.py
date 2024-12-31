@@ -5,6 +5,7 @@ from usuario.cliente import Cliente
 from cliente.tela_exibir_catalogo import TelaExibirCatalogo
 from cliente.tela_reservar_livro import TelaReservarLivro
 from cliente.tela_renovar_devolver_livro import TelaRenovarDevolverLivro
+from cliente.tela_ver_disponibilidade import TelaVerDisponibilidade
 
 class TelaCliente:
     def __init__(self, sistema: Sistema, cliente: Cliente):
@@ -21,6 +22,7 @@ class TelaCliente:
         tk.Button(self.root, text="Reservar Livro", command=self.reservar_livro, width=30).pack(pady=5)
         tk.Button(self.root, text="Devolver Livro", command=self.devolver_livro, width=30).pack(pady=5)
         tk.Button(self.root, text="Renovar Empréstimo", command=self.renovar_emprestimo, width=30).pack(pady=5)
+        tk.Button(self.root, text="Ver Disponibilidade do Livro", command=self.ver_disponibilidade, width=30).pack(pady=5)
         tk.Button(self.root, text="Ver Multas", command=self.ver_multas, width=30).pack(pady=5)
         tk.Button(self.root, text="Fale Conosco", command=self.fale_conosco, width=30).pack(pady=5)
 
@@ -36,6 +38,9 @@ class TelaCliente:
     def renovar_emprestimo(self):
         TelaRenovarDevolverLivro(self.sistema, self.cliente, action="renovar")
 
+    def ver_disponibilidade(self):
+        TelaVerDisponibilidade(self.sistema, self.cliente)
+    
     def ver_multas(self):
         messagebox.showinfo("Multas", "Função em construção.")
 
