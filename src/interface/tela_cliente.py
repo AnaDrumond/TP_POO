@@ -4,6 +4,7 @@ from sistema.sistema import Sistema
 from usuario.cliente import Cliente
 from cliente.tela_exibir_catalogo import TelaExibirCatalogo
 from cliente.tela_reservar_livro import TelaReservarLivro
+from cliente.tela_renovar_devolver_livro import TelaRenovarDevolverLivro
 
 class TelaCliente:
     def __init__(self, sistema: Sistema, cliente: Cliente):
@@ -30,10 +31,10 @@ class TelaCliente:
         TelaReservarLivro(self.sistema, self.cliente)
 
     def devolver_livro(self):
-        messagebox.showinfo("Devolver Livro", "Função em construção.")
+        TelaRenovarDevolverLivro(self.sistema, self.cliente, action="devolver")
 
     def renovar_emprestimo(self):
-        messagebox.showinfo("Renovar Empréstimo", "Função em construção.")
+        TelaRenovarDevolverLivro(self.sistema, self.cliente, action="renovar")
 
     def ver_multas(self):
         messagebox.showinfo("Multas", "Função em construção.")
