@@ -14,7 +14,8 @@
             "cliente": "self._nome",
             "periodo": 5,
             "valor": 10.0
-        }
+        },
+        "multa": 5.0  // ADICIONADO: Multa associada a este livro
     },
     {
         "titulo": "O Pequeno Pr\u00c3\u00adncipe",
@@ -26,7 +27,8 @@
         "titulo": "Dom Quixote",
         "autor": "Miguel de Cervantes",
         "ano": 1605,
-        "disponivel": false
+        "disponivel": false,
+        "multa": 3.0  // ADICIONADO: Multa associada a este livro
     },
     {
         "titulo": "Funda\u00c3\u00a7\u00c3\u00a3o",
@@ -38,6 +40,7 @@
         "titulo": "O Nome da Rosa",
         "autor": "Umberto Eco",
         "ano": 1980,
-        "disponivel": false
+        "disponivel": false,
+        "multa": 2.5  // ADICIONADO: Multa associada a este livro
     }
 ]
