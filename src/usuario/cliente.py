@@ -20,8 +20,8 @@ class Cliente(Usuario):
 
     # Método para calcular a multa
     def calcular_multa(self, livro, dias_atraso):
-        if dias_atraso > 0 and livro.get("multa"):
-            multa = livro["multa"] * dias_atraso  # A multa é calculada pelo valor por dia de atraso
+        if dias_atraso > 0 and livro.get("reserva") and livro["reserva"].get("valor"):
+            multa = livro["reserva"]["valor"] * dias_atraso  # A multa é calculada pelo valor por dia de atraso
             self.multa_total += multa
             return multa
         return 0
@@ -29,6 +29,13 @@ class Cliente(Usuario):
     # Método para obter a multa total do cliente
     def get_multa_total(self):
         return self.multa_total
+
+    # Método para zerar as multas após o pagamento
+    def pagar_multas(self):
+        """
+        Reseta a multa total para 0, indicando que o cliente pagou todas as suas multas.
+        """
+        self.multa_total = 0.0
 
     # Método para obter a lista de livros reservados
     def get_livros_reservados(self):
