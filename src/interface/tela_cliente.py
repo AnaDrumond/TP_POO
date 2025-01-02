@@ -24,6 +24,7 @@ class TelaCliente:
         tk.Button(self.root, text="Renovar Empréstimo", command=self.renovar_emprestimo, width=30).pack(pady=5)
         tk.Button(self.root, text="Ver Disponibilidade do Livro", command=self.ver_disponibilidade, width=30).pack(pady=5)
         tk.Button(self.root, text="Ver Multas", command=self.ver_multas, width=30).pack(pady=5)
+        tk.Button(self.root, text="Pagar Multas", command=self.pagar_multas, width=30).pack(pady=5)
         tk.Button(self.root, text="Fale Conosco", command=self.fale_conosco, width=30).pack(pady=5)
 
     def ver_catalogo(self):
@@ -42,7 +43,19 @@ class TelaCliente:
         TelaVerDisponibilidade(self.sistema, self.cliente)
     
     def ver_multas(self):
-        messagebox.showinfo("Multas", "Função em construção.")
+         multa_total = self.cliente.get_multa_total()
+        if multa_total > 0:
+            messagebox.showinfo("Multas", f"Total de multas acumuladas: R$ {multa_total:.2f}")
+        else:
+            messagebox.showinfo("Multas", "Você não possui multas pendentes.")
+
+     def pagar_multas(self):
+        multa_total = self.cliente.get_multa_total()
+        if multa_total > 0:
+            self.cliente.multa_total = 0  # Zera as multas do cliente
+            messagebox.showinfo("Pagamento", "Todas as multas foram pagas com sucesso!")
+        else:
+            messagebox.showinfo("Pagamento", "Você não possui multas para pagar.")   
 
     def fale_conosco(self):
         messagebox.showinfo("Fale Conosco", "Contato: biblioteca@exemplo.com\nTelefone: (31) 1234-5678")
