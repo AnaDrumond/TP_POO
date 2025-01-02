@@ -107,20 +107,21 @@ class Sistema:
         if valor is None:
             raise ValueError("Período de empréstimo inválido.")
     
-        livro["disponivel"] = False #Atualização do estado do livro;
-        livro["reserva"] = {
-            "cliente": cliente.nome,
-            "periodo": periodo,
-            "valor": valor
-        }
-        
+        for l in self.livros:
+            if l["titulo"] == titulo_livro:
+                l["disponivel"] = False
+                l["reserva"] = {
+                    "cliente": cliente.nome,
+                    "periodo": periodo,
+                    "valor": valor
+                }
+                break
+
+    # Salvando as alterações no arquivo
         try:
             self.salvar_livros()
         except Exception as e:
             raise IOError(f"Erro ao salvar a reserva no arquivo: {str(e)}")
-        
+
         return valor
 
-    def salvar_livros(self):
-        with open(self.arquivo_livros, "w") as arquivo:
-            json.dump(self.livros, arquivo, indent=4)
