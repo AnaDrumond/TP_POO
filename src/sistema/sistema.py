@@ -11,8 +11,7 @@ class Sistema:
     def __init__(self, arquivo_dados="usuarios.json", arquivo_livros="livros.json"):
         self.arquivo_dados = arquivo_dados
         self.arquivo_livros = arquivo_livros
-        self.carregar_dados()
-        self.carregar_livros()
+
         self.base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'database'))
         
         if not os.path.exists(self.base_dir):
