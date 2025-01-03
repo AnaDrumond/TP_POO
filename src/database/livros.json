@@ -15,7 +15,7 @@
             "periodo": 5,
             "valor": 10.0
         },
-        "multa": 5.0  // ADICIONADO: Multa associada a este livro
+        "multa": 5.0  
     },
     {
         "titulo": "O Pequeno Pr\u00c3\u00adncipe",
@@ -28,7 +28,7 @@
         "autor": "Miguel de Cervantes",
         "ano": 1605,
         "disponivel": false,
-        "multa": 3.0  // ADICIONADO: Multa associada a este livro
+        "multa": 3.0 
     },
     {
         "titulo": "Funda\u00c3\u00a7\u00c3\u00a3o",
@@ -41,6 +41,6 @@
         "autor": "Umberto Eco",
         "ano": 1980,
         "disponivel": false,
-        "multa": 2.5  // ADICIONADO: Multa associada a este livro
+        "multa": 2.5  
     }
 ]

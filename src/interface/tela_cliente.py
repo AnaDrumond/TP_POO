@@ -43,13 +43,13 @@ class TelaCliente:
         TelaVerDisponibilidade(self.sistema, self.cliente)
     
     def ver_multas(self):
-         multa_total = self.cliente.get_multa_total()
+        multa_total = self.cliente.get_multa_total()
         if multa_total > 0:
             messagebox.showinfo("Multas", f"Total de multas acumuladas: R$ {multa_total:.2f}")
         else:
             messagebox.showinfo("Multas", "Você não possui multas pendentes.")
 
-     def pagar_multas(self):
+    def pagar_multas(self):
         multa_total = self.cliente.get_multa_total()
         if multa_total > 0:
             self.cliente.multa_total = 0  # Zera as multas do cliente
