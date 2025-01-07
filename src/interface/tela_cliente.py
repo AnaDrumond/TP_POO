@@ -4,7 +4,8 @@ from sistema.sistema import Sistema
 from usuario.cliente import Cliente
 from cliente.tela_exibir_catalogo import TelaExibirCatalogo
 from cliente.tela_reservar_livro import TelaReservarLivro
-from cliente.tela_renovar_devolver_livro import TelaRenovarDevolverLivro
+from cliente.tela_devolver_livro import TelaDevolverLivro
+from cliente.tela_renovar_emprestimo import TelaRenovarEmprestimo
 from cliente.tela_ver_disponibilidade import TelaVerDisponibilidade
 
 class TelaCliente:
@@ -34,39 +35,10 @@ class TelaCliente:
         TelaReservarLivro(self.sistema, self.cliente)
 
     def devolver_livro(self):
-        titulo_livro = tk.simpledialog.askstring("Devolver Livro", "Informe o título do livro:")
-        if not titulo_livro:
-            return
-
-        try:
-            multa = self.sistema.devolver_livro(titulo_livro, self.cliente)
-            if multa > 0:
-                messagebox.showinfo("Livro Devolvido", f"Livro devolvido com sucesso!\nMulta: R$ {multa:.2f}")
-            else:
-                messagebox.showinfo("Livro Devolvido", "Livro devolvido com sucesso!\nNenhuma multa aplicada.")
-        except ValueError as e:
-            messagebox.showerror("Erro", str(e))
-        except Exception as e:
-            messagebox.showerror("Erro", f"Erro inesperado: {str(e)}")
-            
-    # Depois vou tentar arrumar essas duas funções num outro arquivo igual as outras pra deixar tudo bonitnho
+        TelaDevolverLivro(self.sistema, self.cliente)    
 
     def renovar_emprestimo(self):
-        titulo_livro = tk.simpledialog.askstring("Renovar Empréstimo", "Informe o título do livro:")
-        if not titulo_livro:
-            return
-
-        novo_periodo = tk.simpledialog.askinteger("Renovar Empréstimo", "Informe o novo período (5 ou 10 dias):")
-        if not novo_periodo:
-            return
-
-        try:
-            valor = self.sistema.renovar_emprestimo(titulo_livro, self.cliente, novo_periodo)
-            messagebox.showinfo("Renovação Concluída", f"Empréstimo renovado com sucesso!\nNovo valor: R$ {valor:.2f}")
-        except ValueError as e:
-            messagebox.showerror("Erro", str(e))
-        except Exception as e:
-            messagebox.showerror("Erro", f"Erro inesperado: {str(e)}")
+        TelaRenovarEmprestimo(self.sistema, self.cliente)
 
     def ver_disponibilidade(self):
         TelaVerDisponibilidade(self.sistema, self.cliente)
