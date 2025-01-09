@@ -5,7 +5,7 @@ from usuario.cliente import Cliente
 from usuario.administrador import Administrador
 
 class TelaCadastro:
-    def __init__(self, sistema: Sistema):
+    def __init__(self, sistema: Sistema) -> None:
         self.sistema = sistema
 
         self.root = tk.Toplevel()
@@ -38,7 +38,7 @@ class TelaCadastro:
 
         tk.Button(frame, text="Cadastrar", command=self.cadastrar, width=20).grid(row=6, columnspan=2, pady=10)
 
-    def cadastrar(self):
+    def cadastrar(self) -> None:
         nome = self.nome_entry.get()
         email = self.email_entry.get()
         senha = self.senha_entry.get()

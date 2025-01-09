@@ -5,7 +5,7 @@ from sistema.sistema import Sistema
 from usuario.administrador import Administrador
 
 class TelaCadastroLivro:
-    def __init__(self, sistema: Sistema):
+    def __init__(self, sistema: Sistema) -> None:
         self.sistema = sistema
 
         self.root = tk.Toplevel()
@@ -29,7 +29,7 @@ class TelaCadastroLivro:
 
         tk.Button(frame, text="Cadastrar", command=self.cadastrar_livro, width=20).grid(row=3, columnspan=2, pady=10)
 
-    def cadastrar_livro(self):
+    def cadastrar_livro(self) -> None:
         titulo = self.titulo_entry.get()
         autor = self.autor_entry.get()
         ano = self.ano_entry.get()

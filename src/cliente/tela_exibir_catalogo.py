@@ -8,7 +8,7 @@ if sys.platform == "win32":
     ctypes.windll.kernel32.SetConsoleOutputCP(65001)
 
 class TelaExibirCatalogo:
-    def __init__(self, sistema: Sistema):
+    def __init__(self, sistema: Sistema) -> None:
         self.sistema = sistema
 
         self.root = tk.Toplevel()
@@ -39,7 +39,7 @@ class TelaExibirCatalogo:
 
         self.carregar_livros()
 
-    def carregar_livros(self):
+    def carregar_livros(self) -> None:
         for i, livro in enumerate(self.sistema.livros, start=1):
             print(f"Título no JSON: {livro['titulo']}")
             self.tree.insert(

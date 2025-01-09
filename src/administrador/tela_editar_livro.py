@@ -5,7 +5,7 @@ from sistema.sistema import Sistema
 from usuario.administrador import Administrador
 
 class TelaEditarLivro:
-    def __init__(self, sistema: Sistema):
+    def __init__(self, sistema: Sistema) -> None:
         self.sistema = sistema
 
         self.root = tk.Toplevel()
@@ -35,7 +35,7 @@ class TelaEditarLivro:
 
         tk.Button(frame, text="Salvar Alterações", command=self.editar_livro, width=20).grid(row=4, columnspan=2, pady=10)
 
-    def editar_livro(self):
+    def editar_livro(self) -> None:
         livro_selecionado = self.livro_var.get()
         novo_titulo = self.titulo_entry.get()
         novo_autor = self.autor_entry.get()

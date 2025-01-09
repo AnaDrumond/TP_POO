@@ -5,7 +5,7 @@ from sistema.sistema import Sistema
 from usuario.administrador import Administrador
 
 class TelaExibirLivros:
-    def __init__(self, sistema):
+    def __init__(self, sistema: Sistema) -> None:
         self.sistema = sistema
 
         # Criação da janela principal
@@ -42,7 +42,7 @@ class TelaExibirLivros:
         # Carregar os livros na tabela
         self.carregar_livros()
 
-    def carregar_livros(self):
+    def carregar_livros(self) -> None:
         """Carrega os livros na tabela."""
         for i, livro in enumerate(self.sistema.livros, start=1):
             self.tree.insert("", "end", values=(i, livro['titulo'], livro['autor'], livro['ano'], "Sim" if livro.get('disponivel', True) else "Não"))

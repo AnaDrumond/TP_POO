@@ -9,7 +9,7 @@ from cliente.tela_renovar_emprestimo import TelaRenovarEmprestimo
 from cliente.tela_ver_disponibilidade import TelaVerDisponibilidade
 
 class TelaCliente:
-    def __init__(self, sistema: Sistema, cliente: Cliente):
+    def __init__(self, sistema: Sistema, cliente: Cliente) -> None:
         self.sistema = sistema
         self.cliente = cliente
 
@@ -28,29 +28,29 @@ class TelaCliente:
         tk.Button(self.root, text="Pagar Multas", command=self.pagar_multas, width=30).pack(pady=5)
         tk.Button(self.root, text="Fale Conosco", command=self.fale_conosco, width=30).pack(pady=5)
 
-    def ver_catalogo(self):
+    def ver_catalogo(self) -> None:
         TelaExibirCatalogo(self.sistema)
 
-    def reservar_livro(self):
+    def reservar_livro(self) -> None:
         TelaReservarLivro(self.sistema, self.cliente)
 
-    def devolver_livro(self):
+    def devolver_livro(self) -> None:
         TelaDevolverLivro(self.sistema, self.cliente)    
 
-    def renovar_emprestimo(self):
+    def renovar_emprestimo(self) -> None:
         TelaRenovarEmprestimo(self.sistema, self.cliente)
 
-    def ver_disponibilidade(self):
+    def ver_disponibilidade(self) -> None:
         TelaVerDisponibilidade(self.sistema, self.cliente)
     
-    def ver_multas(self):
+    def ver_multas(self) -> None:
         multa_total = self.cliente.get_multa_total()
         if multa_total > 0:
             messagebox.showinfo("Multas", f"Total de multas acumuladas: R$ {multa_total:.2f}")
         else:
             messagebox.showinfo("Multas", "Você não possui multas pendentes.")
 
-    def pagar_multas(self):
+    def pagar_multas(self) -> None:
         multa_total = self.cliente.get_multa_total()
         if multa_total > 0:
             self.cliente.multa_total = 0  # Zera as multas do cliente
@@ -58,5 +58,5 @@ class TelaCliente:
         else:
             messagebox.showinfo("Pagamento", "Você não possui multas para pagar.")   
 
-    def fale_conosco(self):
+    def fale_conosco(self) -> None:
         messagebox.showinfo("Fale Conosco", "Contato: biblioteca@exemplo.com\nTelefone: (31) 1234-5678")

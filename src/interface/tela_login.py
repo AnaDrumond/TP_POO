@@ -8,7 +8,7 @@ from usuario.cliente import Cliente
 from usuario.administrador import Administrador
 
 class TelaLogin:
-    def __init__(self, sistema: Sistema, cliente: Cliente):
+    def __init__(self, sistema: Sistema, cliente: Cliente) -> None:
         self.sistema = sistema
         self.cliente = cliente
 
@@ -32,7 +32,7 @@ class TelaLogin:
 
         self.root.mainloop()
 
-    def login(self):
+    def login(self) -> None:
         nome = self.nome_entry.get()
         senha = self.senha_entry.get()
 
@@ -46,5 +46,5 @@ class TelaLogin:
         except ValueError as e:
             messagebox.showerror("Erro", str(e))
 
-    def cadastrar(self):
+    def cadastrar(self) -> None:
         TelaCadastro(self.sistema)

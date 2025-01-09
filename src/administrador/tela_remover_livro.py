@@ -5,7 +5,7 @@ from sistema.sistema import Sistema
 from usuario.administrador import Administrador
 
 class TelaRemoverLivro:
-    def __init__(self, sistema: Sistema):
+    def __init__(self, sistema: Sistema) -> None:
         self.sistema = sistema
 
         self.root = tk.Toplevel()
@@ -23,7 +23,7 @@ class TelaRemoverLivro:
 
         tk.Button(frame, text="Remover Livro", command=self.remover_livro, width=20).grid(row=1, columnspan=2, pady=10)
 
-    def remover_livro(self):
+    def remover_livro(self) -> None:
         livro_selecionado = self.livro_var.get()
 
         if not livro_selecionado:

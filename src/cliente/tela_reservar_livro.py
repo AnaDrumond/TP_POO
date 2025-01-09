@@ -4,7 +4,7 @@ from sistema.sistema import Sistema
 from usuario.cliente import Cliente
 
 class TelaReservarLivro:
-    def __init__(self, sistema: Sistema, cliente: Cliente):
+    def __init__(self, sistema: Sistema, cliente: Cliente) -> None:
         self.sistema = sistema
         self.cliente = cliente
 
@@ -31,16 +31,16 @@ class TelaReservarLivro:
 
         tk.Button(self.root, text="Reservar", command=self.reservar).pack(pady=10)
 
-    def carregar_livros_na_tabela(self):
+    def carregar_livros_na_tabela(self) -> None:
         livros_disponiveis = self.get_livros_disponiveis()
         for livro in livros_disponiveis:
             disponivel = "Sim" if livro.get("disponivel", True) else "Não"
             self.treeview.insert("", "end", values=(livro["titulo"], livro["autor"], livro["ano"], disponivel))
 
-    def get_livros_disponiveis(self):
+    def get_livros_disponiveis(self) -> list:
         return [livro for livro in self.sistema.livros if livro.get("disponivel", True)]
 
-    def reservar(self):
+    def reservar(self)-> None:
         selected_item = self.treeview.selection()
         if not selected_item:
             messagebox.showerror("Erro", "Por favor, selecione um livro para reservar.")
@@ -54,8 +54,8 @@ class TelaReservarLivro:
             if periodo not in [5, 10]:
                 raise ValueError("Período de empréstimo inválido. Escolha 5 ou 10 dias.")
             
-            valor = self.sistema.reservar_livro(titulo_livro, self.cliente, periodo)
-            messagebox.showinfo("Reserva Confirmada", f"Livro reservado com sucesso! Valor: R${valor:.2f}")
+            valor, data_reserva, data_devolucao = self.sistema.reservar_livro(titulo_livro, self.cliente, periodo)
+            messagebox.showinfo("Reserva Confirmada", f"Livro reservado com sucesso!\nValor: R${valor:.2f}\nData de Reserva: {data_reserva}\nData de Devolução: {data_devolucao}")
             
             self.treeview.delete(*self.treeview.get_children())
             self.carregar_livros_na_tabela()

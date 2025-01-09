@@ -4,7 +4,7 @@ from sistema.sistema import Sistema
 from usuario.cliente import Cliente
 
 class TelaDevolverLivro:
-    def __init__(self, sistema: Sistema, cliente: Cliente):
+    def __init__(self, sistema: Sistema, cliente: Cliente) -> None:
         self.sistema = sistema
         self.cliente = cliente
         self.root = tk.Toplevel()
@@ -19,7 +19,7 @@ class TelaDevolverLivro:
 
         tk.Button(self.root, text="Devolver", command=self.devolver_livro, width=30).pack(pady=20)
 
-    def devolver_livro(self):
+    def devolver_livro(self) -> None:
         titulo_livro = self.titulo_entry.get()
         if not titulo_livro:
             return

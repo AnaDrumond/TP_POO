@@ -4,7 +4,7 @@ from sistema.sistema import Sistema
 from usuario.cliente import Cliente
 
 class TelaRenovarEmprestimo:
-    def __init__(self, sistema: Sistema, cliente: Cliente):
+    def __init__(self, sistema: Sistema, cliente: Cliente) -> None:
         self.sistema = sistema
         self.cliente = cliente
         self.root = tk.Toplevel()
@@ -23,7 +23,7 @@ class TelaRenovarEmprestimo:
 
         tk.Button(self.root, text="Renovar", command=self.renovar_emprestimo, width=30).pack(pady=20)
 
-    def renovar_emprestimo(self):
+    def renovar_emprestimo(self) -> None:
         titulo_livro = self.titulo_livro_entry.get()
         if not titulo_livro:
             return

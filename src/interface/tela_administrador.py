@@ -8,7 +8,7 @@ from administrador.tela_remover_livro import TelaRemoverLivro
 from administrador.tela_exibir_livros import TelaExibirLivros
 
 class TelaAdministrador:
-    def __init__(self, sistema: Sistema):
+    def __init__(self, sistema: Sistema) -> None:
         self.sistema = sistema
 
         self.root = tk.Tk()
@@ -23,7 +23,7 @@ class TelaAdministrador:
         tk.Button(self.root, text="Remover Livro", command=self.remover_livro, width=30).pack(pady=5)
         tk.Button(self.root, text="Histórico de Usuários", command=self.historico_usuarios, width=30).pack(pady=5)
 
-    def ver_catalogo(self):
+    def ver_catalogo(self) -> None:
         janela_livros = tk.Toplevel(self.root)
         janela_livros.title("Catálogo de Livros")
         janela_livros.geometry("700x400")
@@ -52,7 +52,7 @@ class TelaAdministrador:
 
         self.carregar_livros_na_tabela(tree)
 
-    def carregar_livros_na_tabela(self, tree):
+    def carregar_livros_na_tabela(self, tree) -> None:
         """Carrega os livros na tabela."""
         for i, livro in enumerate(self.sistema.livros, start=1):
             tree.insert("", "end", values=(
@@ -64,14 +64,12 @@ class TelaAdministrador:
             ))
 
 
-    def novo_livro(self):
+    def novo_livro(self) -> None:
         TelaCadastroLivro(self.sistema)
 
-    def editar_livro(self):
+    def editar_livro(self) -> None:
         TelaEditarLivro(self.sistema)
 
-    def remover_livro(self):
+    def remover_livro(self) -> None:
         TelaRemoverLivro(self.sistema)
 
-    def historico_usuarios(self):
-        messagebox.showinfo("Histórico", "Função em construção.")

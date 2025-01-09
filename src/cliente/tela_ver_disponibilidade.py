@@ -8,7 +8,7 @@ def normalizar_string(s):
     return unicodedata.normalize('NFD', s).encode('ascii', 'ignore').decode('ascii')
 
 class TelaVerDisponibilidade:
-    def __init__(self, sistema: Sistema, cliente: Cliente):
+    def __init__(self, sistema: Sistema, cliente: Cliente) -> None:
         self.sistema = sistema
         self.cliente = cliente
 
@@ -24,7 +24,7 @@ class TelaVerDisponibilidade:
         # Botão para verificar a disponibilidade
         tk.Button(self.root, text="Verificar Disponibilidade", command=self.verificar_disponibilidade).pack(pady=5)
 
-    def verificar_disponibilidade(self):
+    def verificar_disponibilidade(self) -> None:
         titulo = self.titulo_entry.get()
         titulo_normalizado = normalizar_string(titulo).lower()
     
