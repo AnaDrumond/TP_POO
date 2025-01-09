@@ -8,12 +8,11 @@ import unicodedata
 from usuario.cliente import Cliente
 from usuario.administrador import Administrador
 
-
-def normalizar_string(s): 
+def normalizar_string(s: str) -> str: 
         return unicodedata.normalize('NFD', s).encode('ascii', 'ignore').decode('ascii')
-    
+
 class Sistema:
-    def __init__(self, arquivo_dados="usuarios.json", arquivo_livros="livros.json"):
+    def __init__(self, arquivo_dados: str="usuarios.json", arquivo_livros: str="livros.json") -> None:
         self.arquivo_dados = arquivo_dados
         self.arquivo_livros = arquivo_livros
 
@@ -27,30 +26,30 @@ class Sistema:
         
         self.carregar_dados()
         self.carregar_livros()
-
-    def carregar_dados(self):
+        
+    def carregar_dados(self) -> None:
         try:
             with open(self.arquivo_dados, 'r', encoding='utf-8') as arquivo:
                 self.usuarios = json.load(arquivo)
         except FileNotFoundError:
             self.usuarios = []
 
-    def salvar_dados(self):
+    def salvar_dados(self) -> None:
         with open(self.arquivo_dados, 'w', encoding='utf-8') as arquivo:
             json.dump(self.usuarios, arquivo, indent=4)
 
-    def carregar_livros(self):
+    def carregar_livros(self) -> None:
         try:
             with open(self.arquivo_livros, 'r', encoding='utf-8') as arquivo:
                 self.livros = json.load(arquivo)
         except FileNotFoundError:
             self.livros = []
 
-    def salvar_livros(self):
+    def salvar_livros(self) -> None:
         with open(self.arquivo_livros, 'w', encoding='utf-8') as arquivo:
             json.dump(self.livros, arquivo, indent=4)
 
-    def cadastrar_usuario(self, nome: str, email: str, senha: str, tipo: str):
+    def cadastrar_usuario(self, nome: str, email: str, senha: str, tipo: str) -> None:
         senha_hash = hashlib.sha256(senha.encode()).hexdigest()
         if not nome.isalpha():
             raise ValueError("O nome deve conter apenas letras.")
@@ -64,17 +63,19 @@ class Sistema:
         self.usuarios.append({"nome": nome, "email": email, "senha": senha_hash, "tipo": tipo})
         self.salvar_dados()
 
-    def autenticar_usuario(self, nome: str, senha: str):
+    def autenticar_usuario(self, nome: str, senha: str) -> object:
         senha_hash = hashlib.sha256(senha.encode()).hexdigest()
         for usuario in self.usuarios:
             if normalizar_string(usuario['nome']) == normalizar_string(nome) and usuario['senha'] == senha_hash:
                 if usuario['tipo'] == 'cliente':
-                    return Cliente(nome, senha)
+                    cliente = Cliente(usuario['nome'], usuario['senha'])
+                    cliente.livros_reservados = usuario.get("livros_reservados", [])
+                    return cliente
                 elif usuario['tipo'] == 'administrador':
-                    return Administrador(nome, senha)
+                    return Administrador(usuario['nome'], usuario['senha'])
         raise ValueError("Nome ou senha incorretos.")
     
-    def cadastrar_livro(self, titulo: str, autor: str, ano: int):
+    def cadastrar_livro(self, titulo: str, autor: str, ano: int) -> None:
         titulo_normalizado = normalizar_string(titulo).lower()
         if any(normalizar_string(livro['titulo']).lower() == titulo_normalizado for livro in self.livros):
             raise ValueError("Já existe um livro com esse título.")
@@ -88,7 +89,7 @@ class Sistema:
         self.salvar_livros()
 
 
-    def editar_livro(self, titulo_atual: str, novo_titulo: str, novo_autor: str, novo_ano: int):
+    def editar_livro(self, titulo_atual: str, novo_titulo: str, novo_autor: str, novo_ano: int) -> None:
         if not novo_titulo or not novo_autor or novo_ano <= 0:
             raise ValueError("Informações inválidas para o livro.")
 
@@ -99,7 +100,7 @@ class Sistema:
                 return
         raise ValueError("Livro não encontrado.")
 
-    def remover_livro(self, titulo: str):
+    def remover_livro(self, titulo: str) -> dict:
         livro_removido = next((livro for livro in self.livros if normalizar_string(livro['titulo']) == normalizar_string(titulo)), None)
         if not livro_removido:
             raise ValueError("Livro não encontrado.")
@@ -107,7 +108,7 @@ class Sistema:
         self.salvar_livros()
         return livro_removido
     
-    def reservar_livro(self, titulo_livro, cliente, periodo):  # Função para a reserva de livro do cliente
+    def reservar_livro(self, titulo_livro: str, cliente: Cliente, periodo: int) -> tuple:
         livro = next((l for l in self.livros if normalizar_string(l["titulo"]) == normalizar_string(titulo_livro)), None)
         if not livro:
             raise ValueError("Livro não encontrado.")
@@ -121,7 +122,7 @@ class Sistema:
         
         data_reserva = datetime.date.today()
         data_devolucao = data_reserva + datetime.timedelta(days=periodo)
-    
+
         for l in self.livros:
             if normalizar_string(l["titulo"]) == normalizar_string(titulo_livro):
                 l["disponivel"] = False
@@ -134,14 +135,17 @@ class Sistema:
                 }
                 break
 
+        cliente.adicionar_livro_reservado(livro)  # Adiciona o livro à lista de livros reservados do cliente
+
         try:
             self.salvar_livros()  # Salvando as alterações no arquivo
+            self.salvar_dados()  # Salvando os dados do cliente
         except Exception as e:
             raise IOError(f"Erro ao salvar a reserva no arquivo: {str(e)}")
 
         return valor, data_reserva, data_devolucao
     
-    def renovar_emprestimo(self, titulo_livro: str, cliente: Cliente, novo_periodo: int):
+    def renovar_emprestimo(self, titulo_livro: str, cliente: Cliente, novo_periodo: int) -> float:
         #Renova o empréstimo de um livro reservado por um cliente.
         livro = next((l for l in self.livros if l["titulo"] == titulo_livro), None)
         if not livro:
@@ -167,7 +171,7 @@ class Sistema:
 
         return novo_valor
 
-    def devolver_livro(self, titulo_livro: str, cliente: Cliente):
+    def devolver_livro(self, titulo_livro: str, cliente: Cliente) -> float:
         #Devolve um livro reservado e calcula a multa, se aplicável.
         livro = next((l for l in self.livros if l["titulo"] == titulo_livro), None)
         if not livro:

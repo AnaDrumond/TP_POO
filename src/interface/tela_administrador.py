@@ -21,7 +21,6 @@ class TelaAdministrador:
         tk.Button(self.root, text="Cadastrar Novo Livro", command=self.novo_livro, width=30).pack(pady=5)
         tk.Button(self.root, text="Editar Livro", command=self.editar_livro, width=30).pack(pady=5)
         tk.Button(self.root, text="Remover Livro", command=self.remover_livro, width=30).pack(pady=5)
-        tk.Button(self.root, text="Histórico de Usuários", command=self.historico_usuarios, width=30).pack(pady=5)
 
     def ver_catalogo(self) -> None:
         janela_livros = tk.Toplevel(self.root)

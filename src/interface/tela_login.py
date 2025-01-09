@@ -8,9 +8,8 @@ from usuario.cliente import Cliente
 from usuario.administrador import Administrador
 
 class TelaLogin:
-    def __init__(self, sistema: Sistema, cliente: Cliente) -> None:
+    def __init__(self, sistema: Sistema) -> None:
         self.sistema = sistema
-        self.cliente = cliente
 
         self.root = tk.Tk()
         self.root.title("Sistema de Biblioteca")
@@ -39,7 +38,7 @@ class TelaLogin:
         try:
             usuario = self.sistema.autenticar_usuario(nome, senha)
             if isinstance(usuario, Cliente):
-                TelaCliente(self.sistema, self.cliente)
+                TelaCliente(self.sistema, usuario)
             elif isinstance(usuario, Administrador):
                 TelaAdministrador(self.sistema)
 

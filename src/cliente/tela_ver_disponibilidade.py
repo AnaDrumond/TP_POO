@@ -28,11 +28,11 @@ class TelaVerDisponibilidade:
         titulo = self.titulo_entry.get()
         titulo_normalizado = normalizar_string(titulo).lower()
     
-    # Procurar o livro no sistema
+        # Procurar o livro no sistema
         livro_encontrado = next(
             (livro for livro in self.sistema.livros if normalizar_string(livro["titulo"]).lower() == titulo_normalizado),
             None
-    )
+        )
 
         if livro_encontrado:
             if livro_encontrado.get("disponivel", True):
