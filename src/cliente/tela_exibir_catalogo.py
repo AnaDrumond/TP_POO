@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import messagebox
 from sistema.sistema import Sistema
-from usuario.cliente import Cliente
+import sys
+
+if sys.platform == "win32":
+    import ctypes
+    ctypes.windll.kernel32.SetConsoleOutputCP(65001)
 
 class TelaExibirCatalogo:
     def __init__(self, sistema: Sistema):
@@ -38,4 +41,14 @@ class TelaExibirCatalogo:
 
     def carregar_livros(self):
         for i, livro in enumerate(self.sistema.livros, start=1):
-            self.tree.insert("", "end", values=(i, livro['titulo'], livro['autor'], livro['ano'], "Sim" if livro.get('disponivel', True) else "Não"))
+            print(f"Título no JSON: {livro['titulo']}")
+            self.tree.insert(
+                "", "end",
+                values=(
+                    i,
+                    livro['titulo'],  
+                    livro['autor'],
+                    livro['ano'],
+                    "Sim" if livro.get('disponivel', True) else "Não"
+                )
+            )

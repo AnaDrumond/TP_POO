@@ -1,6 +1,6 @@
 [
     {
-        "titulo": "O Senhor dos An\u00c3\u00a9is - A Sociedade do Anel",
+        "titulo": "O Senhor dos Anéis",
         "autor": "J.R.R. Tolkien",
         "ano": 1954,
         "disponivel": true
@@ -18,8 +18,8 @@
         "multa": 5.0  
     },
     {
-        "titulo": "O Pequeno Pr\u00c3\u00adncipe",
-        "autor": "Antoine de Saint-Exup\u00c3\u00a9ry",
+        "titulo": "O Pequeno Príncipe",
+        "autor": "Antoine de Saint-Exupèry",
         "ano": 1943,
         "disponivel": true
     },
@@ -28,10 +28,10 @@
         "autor": "Miguel de Cervantes",
         "ano": 1605,
         "disponivel": false,
-        "multa": 3.0 
+        "multa": 3.0  
     },
     {
-        "titulo": "Funda\u00c3\u00a7\u00c3\u00a3o",
+        "titulo": "Fundação",
         "autor": "Isaac Asimov",
         "ano": 1951,
         "disponivel": true

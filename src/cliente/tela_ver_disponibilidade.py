@@ -2,6 +2,10 @@ import tkinter as tk
 from tkinter import messagebox
 from sistema.sistema import Sistema
 from usuario.cliente import Cliente
+import unicodedata
+
+def normalizar_string(s):
+    return unicodedata.normalize('NFD', s).encode('ascii', 'ignore').decode('ascii')
 
 class TelaVerDisponibilidade:
     def __init__(self, sistema: Sistema, cliente: Cliente):
@@ -21,24 +25,24 @@ class TelaVerDisponibilidade:
         tk.Button(self.root, text="Verificar Disponibilidade", command=self.verificar_disponibilidade).pack(pady=5)
 
     def verificar_disponibilidade(self):
-        # Obter o título do livro
         titulo = self.titulo_entry.get()
-        
-        # Procurar o livro no sistema
-        livro_encontrado = None
-        for livro in self.sistema.livros:  # Supondo que 'livros' é a lista de livros do sistema
-            if livro["titulo"].lower() == titulo.lower():
-                livro_encontrado = livro
-                break
-        
+        titulo_normalizado = normalizar_string(titulo).lower()
+    
+    # Procurar o livro no sistema
+        livro_encontrado = next(
+            (livro for livro in self.sistema.livros if normalizar_string(livro["titulo"]).lower() == titulo_normalizado),
+            None
+    )
+
         if livro_encontrado:
-            # Mostrar a disponibilidade
-            if livro_encontrado["disponivel"]:
+            if livro_encontrado.get("disponivel", True):
                 messagebox.showinfo("Disponibilidade", f"O livro '{titulo}' está disponível para empréstimo.")
             else:
-                # Verificar se o livro tem reserva
                 if "reserva" in livro_encontrado:
-                    messagebox.showinfo("Disponibilidade", f"O livro '{titulo}' está reservado para {livro_encontrado['reserva']['cliente']} por {livro_encontrado['reserva']['periodo']} dias.")
+                    messagebox.showinfo(
+                        "Disponibilidade", 
+                        f"O livro '{titulo}' está reservado para {livro_encontrado['reserva']['cliente']} por {livro_encontrado['reserva']['periodo']} dias."
+                    )
                 else:
                     messagebox.showinfo("Disponibilidade", f"O livro '{titulo}' está indisponível no momento.")
         else:
