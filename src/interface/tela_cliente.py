@@ -17,16 +17,18 @@ class TelaCliente:
         self.root.title("Painel do Cliente")
         self.root.geometry("800x600")
 
-        tk.Label(self.root, text="Bem-vindo ao Painel do Cliente!", font=("Arial", 14, "bold"), wraplength=180).pack(pady=20)
+        self.root.configure(bg="#013440")
+    
+        tk.Label(self.root, text="Bem-vindo ao Painel do Cliente!", font=("Arial", 14, "bold"), bg="#013440", fg="white").pack(pady=20)
 
-        tk.Button(self.root, text="Ver Catálogo de Livros", command=self.ver_catalogo, width=30).pack(pady=5)
-        tk.Button(self.root, text="Reservar Livro", command=self.reservar_livro, width=30).pack(pady=5)
-        tk.Button(self.root, text="Devolver Livro", command=self.devolver_livro, width=30).pack(pady=5)
-        tk.Button(self.root, text="Renovar Empréstimo", command=self.renovar_emprestimo, width=30).pack(pady=5)
-        tk.Button(self.root, text="Ver Disponibilidade do Livro", command=self.ver_disponibilidade, width=30).pack(pady=5)
-        tk.Button(self.root, text="Ver Multas", command=self.ver_multas, width=30).pack(pady=5)
-        tk.Button(self.root, text="Pagar Multas", command=self.pagar_multas, width=30).pack(pady=5)
-        tk.Button(self.root, text="Fale Conosco", command=self.fale_conosco, width=30).pack(pady=5)
+        tk.Button(self.root, text="Ver Catálogo de Livros", command=self.ver_catalogo, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Reservar Livro", command=self.reservar_livro, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Devolver Livro", command=self.devolver_livro, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Renovar Empréstimo", command=self.renovar_emprestimo, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Ver Disponibilidade do Livro", command=self.ver_disponibilidade, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Ver Multas", command=self.ver_multas, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Pagar Multas", command=self.pagar_multas, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Fale Conosco", command=self.fale_conosco, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
 
     def ver_catalogo(self) -> None:
         TelaExibirCatalogo(self.sistema)

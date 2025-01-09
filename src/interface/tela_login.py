@@ -14,20 +14,28 @@ class TelaLogin:
         self.root = tk.Tk()
         self.root.title("Sistema de Biblioteca")
         self.root.geometry("400x300")
+        self.root.configure(bg="#013440") 
+        
+        # Carregar o ícone
+        self.icon_image = tk.PhotoImage(file="c:/Users/menev/TP_POO/TP_POO/src/interface/icons8-male-user-100.png")  # Certifique-se do nome correto do arquivo
+        icon_label = tk.Label(self.root, image=self.icon_image, bg="#013440")  # Adiciona o ícone à interface
+        icon_label.pack(pady=10)  # Posiciona o ícone no topo com espaçamento vertical
 
-        frame = tk.Frame(self.root, padx=20, pady=20)
+
+        frame = tk.Frame(self.root, padx=20, pady=20,  bg="#013440")
         frame.pack(expand=True)
 
-        tk.Label(frame, text="Usuário:").grid(row=0, column=0, pady=5, sticky="w")
+        tk.Label(frame, text="Usuário:", bg="#013440", fg="white").grid(row=0, column=0, pady=5, sticky="w")
         self.nome_entry = tk.Entry(frame, width=30)
         self.nome_entry.grid(row=0, column=1, pady=5)
 
-        tk.Label(frame, text="Senha:").grid(row=1, column=0, pady=5, sticky="w")
+        tk.Label(frame, text="Senha:", bg="#013440", fg="white").grid(row=1, column=0, pady=5, sticky="w")
         self.senha_entry = tk.Entry(frame, show="*", width=30)
         self.senha_entry.grid(row=1, column=1, pady=5)
 
-        tk.Button(frame, text="Login", command=self.login, width=15).grid(row=2, column=0, pady=10)
-        tk.Button(frame, text="Cadastrar", command=self.cadastrar, width=15).grid(row=2, column=1, pady=10)
+        btn_style = {"bg": "#4A5D23", "fg": "white", "font": ("Arial", 10, "bold")}
+        tk.Button(frame, text="Login", command=self.login, width=15, **btn_style).grid(row=2, column=0, pady=10)
+        tk.Button(frame, text="Cadastrar", command=self.cadastrar, width=15,  **btn_style).grid(row=2, column=1, pady=10)
 
         self.root.mainloop()
 

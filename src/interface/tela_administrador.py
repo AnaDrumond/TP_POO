@@ -14,13 +14,16 @@ class TelaAdministrador:
         self.root = tk.Tk()
         self.root.title("Painel do Administrador")
         self.root.geometry("800x600")
+        self.root.configure(bg="#013440")
 
-        tk.Label(self.root, text="Bem-vindo ao Painel do Administrador!", font=("Arial", 14, "bold"), wraplength=180).pack(pady=20)
+        tk.Label(self.root, text="Bem-vindo ao Painel do Administrador!", font=("Arial", 14, "bold"), bg="#013440", 
+            fg="white").pack(pady=20)
 
-        tk.Button(self.root, text="Ver Catálogo de Livros", command=self.ver_catalogo, width=30).pack(pady=5)
-        tk.Button(self.root, text="Cadastrar Novo Livro", command=self.novo_livro, width=30).pack(pady=5)
-        tk.Button(self.root, text="Editar Livro", command=self.editar_livro, width=30).pack(pady=5)
-        tk.Button(self.root, text="Remover Livro", command=self.remover_livro, width=30).pack(pady=5)
+        tk.Button(self.root, text="Ver Catálogo de Livros", command=self.ver_catalogo, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Cadastrar Novo Livro", command=self.novo_livro, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Editar Livro", command=self.editar_livro, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+        tk.Button(self.root, text="Remover Livro", command=self.remover_livro, bg="#4A5D23", fg="white", font=("Arial", 12, "bold"), width=30).pack(pady=5)
+
 
     def ver_catalogo(self) -> None:
         janela_livros = tk.Toplevel(self.root)
