@@ -30,8 +30,7 @@ class TelaRemoverLivro:
             messagebox.showerror("Erro", "Nenhum livro selecionado.")
             return
 
-        titulo = livro_selecionado.split(" - ")[0]  # Extrai o título original
-
+        titulo = livro_selecionado.split(" - ")[0]
         try:
             self.sistema.remover_livro(titulo)
             messagebox.showinfo("Sucesso", "Livro removido com sucesso!")

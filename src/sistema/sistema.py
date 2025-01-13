@@ -5,6 +5,7 @@ import os
 import hashlib
 import datetime
 import unicodedata
+import re
 from usuario.cliente import Cliente
 from usuario.administrador import Administrador
 
@@ -50,6 +51,10 @@ class Sistema:
             json.dump(self.livros, arquivo, indent=4)
 
     def cadastrar_usuario(self, nome: str, email: str, senha: str, tipo: str) -> None:
+        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_regex, email):
+            raise ValueError("Formato de email inválido.")
+        
         senha_hash = hashlib.sha256(senha.encode()).hexdigest()
         if not nome.isalpha():
             raise ValueError("O nome deve conter apenas letras.")
@@ -115,7 +120,7 @@ class Sistema:
         if not livro.get("disponivel", True):
             raise ValueError("Livro indisponível para reserva.")
 
-        valores_periodo = {5: 10.0, 10: 20.00}  # Definição do período de empréstimo e seu valor;
+        valores_periodo = {5: 10.0, 10: 20.00}
         valor = valores_periodo.get(periodo, None)
         if valor is None:
             raise ValueError("Período de empréstimo inválido.")
@@ -135,11 +140,11 @@ class Sistema:
                 }
                 break
 
-        cliente.adicionar_livro_reservado(livro)  # Adiciona o livro à lista de livros reservados do cliente
+        cliente.adicionar_livro_reservado(livro)
 
         try:
-            self.salvar_livros()  # Salvando as alterações no arquivo
-            self.salvar_dados()  # Salvando os dados do cliente
+            self.salvar_livros()
+            self.salvar_dados()
         except Exception as e:
             raise IOError(f"Erro ao salvar a reserva no arquivo: {str(e)}")
 
@@ -181,7 +186,6 @@ class Sistema:
         if livro.get("reserva", {}).get("cliente") != cliente.nome:
             raise ValueError("Este livro não está reservado por você.")
 
-        # Verificar se há atraso e calcular multa
         reserva = livro.get("reserva", {})
         data_devolucao = datetime.date.fromisoformat(reserva.get("data_devolucao"))
         dias_atraso = (datetime.date.today() - data_devolucao).days

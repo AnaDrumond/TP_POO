@@ -27,7 +27,7 @@ class TelaDevolverLivro:
             messagebox.showerror("Erro", "Nenhum livro selecionado.")
             return
 
-        titulo_livro = livro_selecionado.split(" - ")[0]  # Extrai o título original
+        titulo_livro = livro_selecionado.split(" - ")[0]
 
         try:
             multa = self.sistema.devolver_livro(titulo_livro, self.cliente)

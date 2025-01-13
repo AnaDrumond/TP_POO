@@ -16,19 +16,16 @@ class TelaVerDisponibilidade:
         self.root.title("Ver Disponibilidade do Livro")
         self.root.geometry("400x300")
 
-        # Criar campo para o cliente digitar o título do livro
         tk.Label(self.root, text="Digite o título do livro para verificar a disponibilidade:").pack(pady=10)
         self.titulo_entry = tk.Entry(self.root, width=40)
         self.titulo_entry.pack(pady=10)
 
-        # Botão para verificar a disponibilidade
         tk.Button(self.root, text="Verificar Disponibilidade", command=self.verificar_disponibilidade).pack(pady=5)
 
     def verificar_disponibilidade(self) -> None:
         titulo = self.titulo_entry.get()
         titulo_normalizado = normalizar_string(titulo).lower()
     
-        # Procurar o livro no sistema
         livro_encontrado = next(
             (livro for livro in self.sistema.livros if normalizar_string(livro["titulo"]).lower() == titulo_normalizado),
             None

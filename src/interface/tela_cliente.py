@@ -55,7 +55,7 @@ class TelaCliente:
     def pagar_multas(self) -> None:
         multa_total = self.cliente.get_multa_total()
         if multa_total > 0:
-            self.cliente.multa_total = 0  # Zera as multas do cliente
+            self.cliente.multa_total = 0 
             messagebox.showinfo("Pagamento", "Todas as multas foram pagas com sucesso!")
         else:
             messagebox.showinfo("Pagamento", "Você não possui multas para pagar.")   

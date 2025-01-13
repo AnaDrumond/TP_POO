@@ -16,10 +16,9 @@ class TelaLogin:
         self.root.geometry("400x300")
         self.root.configure(bg="#013440") 
         
-        # Carregar o ícone
-        self.icon_image = tk.PhotoImage(file="assets/icons/icons8-male-user-100.png")  # Certifique-se do nome correto do arquivo
-        icon_label = tk.Label(self.root, image=self.icon_image, bg="#013440")  # Adiciona o ícone à interface
-        icon_label.pack(pady=10)  # Posiciona o ícone no topo com espaçamento vertical
+        self.icon_image = tk.PhotoImage(file="assets/icons/icons8-male-user-100.png")
+        icon_label = tk.Label(self.root, image=self.icon_image, bg="#013440")
+        icon_label.pack(pady=10)
 
 
         frame = tk.Frame(self.root, padx=20, pady=20,  bg="#013440")

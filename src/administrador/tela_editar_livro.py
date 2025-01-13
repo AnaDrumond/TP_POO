@@ -49,7 +49,7 @@ class TelaEditarLivro:
             messagebox.showerror("Erro", "Preencha todos os campos corretamente.")
             return
 
-        titulo_atual = livro_selecionado.split(" - ")[0]  # Extrai o título original
+        titulo_atual = livro_selecionado.split(" - ")[0] 
 
         try:
             self.sistema.editar_livro(titulo_atual, novo_titulo, novo_autor, int(novo_ano))

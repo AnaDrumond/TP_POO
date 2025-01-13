@@ -31,7 +31,7 @@ class TelaRenovarEmprestimo:
             messagebox.showerror("Erro", "Nenhum livro selecionado.")
             return
 
-        titulo_livro = livro_selecionado.split(" - ")[0]  # Extrai o título original
+        titulo_livro = livro_selecionado.split(" - ")[0] 
 
         try:
             novo_periodo = int(self.novo_periodo_entry.get())
