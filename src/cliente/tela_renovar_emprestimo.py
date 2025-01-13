@@ -40,8 +40,8 @@ class TelaRenovarEmprestimo:
             return
 
         try:
-            valor = self.sistema.renovar_emprestimo(titulo_livro, self.cliente, novo_periodo)
-            messagebox.showinfo("Renovação Concluída", f"Empréstimo renovado com sucesso!\nNovo valor: R$ {valor:.2f}")
+            novo_valor, nova_data_devolucao = self.sistema.renovar_emprestimo(titulo_livro, self.cliente, novo_periodo)
+            messagebox.showinfo("Renovação Concluída", f"Empréstimo renovado com sucesso!\nNovo valor: R$ {novo_valor:.2f}\nNova data de devolução: {nova_data_devolucao}")
             self.root.destroy()
         except ValueError as e:
             messagebox.showerror("Erro", str(e))

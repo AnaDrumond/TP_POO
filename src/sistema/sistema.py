@@ -146,7 +146,6 @@ class Sistema:
         return valor, data_reserva, data_devolucao
     
     def renovar_emprestimo(self, titulo_livro: str, cliente: Cliente, novo_periodo: int) -> float:
-        #Renova o empréstimo de um livro reservado por um cliente.
         livro = next((l for l in self.livros if l["titulo"] == titulo_livro), None)
         if not livro:
             raise ValueError("Livro não encontrado.")
@@ -159,20 +158,22 @@ class Sistema:
         if novo_valor is None:
             raise ValueError("Período de empréstimo inválido.")
 
-        # Atualizando a reserva
-        livro["reserva"]["periodo"] = novo_periodo
-        livro["reserva"]["valor"] = novo_valor
+        reserva = livro["reserva"]
+        data_devolucao_antiga = datetime.date.fromisoformat(reserva["data_devolucao"])
+        nova_data_devolucao = data_devolucao_antiga + datetime.timedelta(days=novo_periodo)
+        
+        reserva["periodo"] += novo_periodo
+        reserva["valor"] += novo_valor
+        reserva["data_devolucao"] = nova_data_devolucao.isoformat()
 
-        # Salvando no arquivo
         try:
             self.salvar_livros()
         except Exception as e:
             raise IOError(f"Erro ao salvar a renovação no arquivo: {str(e)}")
 
-        return novo_valor
+        return novo_valor, nova_data_devolucao
 
     def devolver_livro(self, titulo_livro: str, cliente: Cliente) -> float:
-        #Devolve um livro reservado e calcula a multa, se aplicável.
         livro = next((l for l in self.livros if l["titulo"] == titulo_livro), None)
         if not livro:
             raise ValueError("Livro não encontrado.")
@@ -182,17 +183,16 @@ class Sistema:
 
         # Verificar se há atraso e calcular multa
         reserva = livro.get("reserva", {})
-        dias_reservados = reserva.get("periodo", 0)
-        valor_reserva = reserva.get("valor", 0)
-        dias_atraso = max(0, dias_reservados - 10)  # Simulação: prazo excedido após 10 dias
+        data_devolucao = datetime.date.fromisoformat(reserva.get("data_devolucao"))
+        dias_atraso = (datetime.date.today() - data_devolucao).days
 
-        multa = cliente.calcular_multa(livro, dias_atraso)
+        multa = 0
+        if dias_atraso > 0:
+            multa = cliente.calcular_multa(livro, dias_atraso)
 
-        # Tornar o livro disponível novamente
         livro["disponivel"] = True
-        livro.pop("reserva", None)  # Remove a reserva do livro
+        livro.pop("reserva", None)
 
-        # Atualizar no arquivo
         try:
             self.salvar_livros()
         except Exception as e:

@@ -54,7 +54,7 @@ class TelaAdministrador:
 
         self.carregar_livros_na_tabela(tree)
 
-    def carregar_livros_na_tabela(self, tree) -> None:
+    def carregar_livros_na_tabela(self, tree: ttk.Treeview) -> None:
         """Carrega os livros na tabela."""
         for i, livro in enumerate(self.sistema.livros, start=1):
             tree.insert("", "end", values=(
@@ -64,7 +64,6 @@ class TelaAdministrador:
                 livro["ano"],
                 "Sim" if livro.get("disponivel", True) else "Não"
             ))
-
 
     def novo_livro(self) -> None:
         TelaCadastroLivro(self.sistema)
