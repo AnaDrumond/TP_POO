@@ -16,14 +16,18 @@ class TelaRenovarEmprestimo:
         tk.Label(self.root, text="Selecione o Livro:").pack(pady=5)
         self.livro_var = tk.StringVar(value="")
         livros_opcoes = [f"{livro['titulo']} - {livro['autor']} ({livro['ano']})" for livro in self.sistema.livros if livro.get("reserva", {}).get("cliente") == cliente.nome]
-        self.livro_menu = tk.OptionMenu(self.root, self.livro_var, *livros_opcoes)
-        self.livro_menu.pack(pady=5)
+        
+        if not livros_opcoes:
+            tk.Label(self.root, text="Não há livros reservados por você disponíveis para renovação.", fg="red").pack(pady=5)
+        else:
+            self.livro_menu = tk.OptionMenu(self.root, self.livro_var, *livros_opcoes)
+            self.livro_menu.pack(pady=5)
 
-        tk.Label(self.root, text="Novo Período (5 ou 10 dias):").pack(pady=5)
-        self.novo_periodo_entry = tk.Entry(self.root, width=30)
-        self.novo_periodo_entry.pack(pady=5)
+            tk.Label(self.root, text="Novo Período (5 ou 10 dias):").pack(pady=5)
+            self.novo_periodo_entry = tk.Entry(self.root, width=30)
+            self.novo_periodo_entry.pack(pady=5)
 
-        tk.Button(self.root, text="Renovar", command=self.renovar_emprestimo, width=30).pack(pady=20)
+            tk.Button(self.root, text="Renovar", command=self.renovar_emprestimo, width=30).pack(pady=20)
 
     def renovar_emprestimo(self) -> None:
         livro_selecionado = self.livro_var.get()
